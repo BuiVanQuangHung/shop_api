@@ -4,20 +4,48 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const hotelsRoute = require("./routes/hotels");
+const roomRoute = require("./routes/room");
 
 dotenv.config();
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("Db connect Succsessful"))
-  .catch((err) => {
-    console.log(err);
-  });
+const connect = async () => {
+  try {
+    await mongoose
+      .connect(process.env.MONGO_URL)
+      .then(() => console.log("Db connect Succsessful"));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+mongoose.connection.on("disconnected", () => {
+  console.log("mongoDb disconnected");
+});
+
+mongoose.connection.on("connected", () => {
+  console.log("mongoDb connected");
+});
 
 app.use(express.json());
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/hotels", hotelsRoute);
+app.use("/api/room", roomRoute);
 
-app.listen(process.env.port || 5000, () => {
+app.use((error, req, res, next) => {
+  const errorStatus = error.status || 500;
+  const errorMessage = error.message || "Something went wrong";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: error.stack,
+  });
+});
+
+app.listen(process.env.port || 8000, () => {
+  connect();
   console.log("Backend server is running");
 });
