@@ -6,6 +6,7 @@ const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const hotelsRoute = require("./routes/hotels");
 const roomRoute = require("./routes/room");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ mongoose.connection.on("disconnected", () => {
 mongoose.connection.on("connected", () => {
   console.log("mongoDb connected");
 });
-
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
