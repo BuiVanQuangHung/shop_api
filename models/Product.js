@@ -2,12 +2,20 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema(
   {
-    photos: {
-      type: [String],
-      required: true,
+    image: {
+      type: String,
+      // required: true,
     },
     name: {
       type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      // required: true,
+    },
+    price: {
+      type: Number,
       required: true,
     },
     desc: {
@@ -21,6 +29,9 @@ const ProductSchema = new mongoose.Schema(
     time: {
       type: String,
       required: true,
+    },
+    realTime: {
+      type: String,
     },
     tranform: {
       type: String,
@@ -37,15 +48,19 @@ const ProductSchema = new mongoose.Schema(
     },
     aboutTour: {
       type: Array,
-      required: true,
+      // required: true,
     },
     rules: {
       type: Array,
-      required: true,
+      // required: true,
     },
     infor: {
       type: Array,
-      required: true,
+      // required: true,
+    },
+    inStock: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

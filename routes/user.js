@@ -3,6 +3,7 @@ const {
   deleteUser,
   getAllUsers,
   getUser,
+  getAllUsersStarts,
 } = require("../controllers/user");
 const {
   verifyToken,
@@ -11,6 +12,9 @@ const {
 } = require("../utils/verifyToken");
 
 const router = require("express").Router();
+
+//! GET ALL STARTS
+router.get("/stats", verifyAdmin, getAllUsersStarts);
 
 //! UPDATE
 router.put("/:id", verifyUser, updateUser);

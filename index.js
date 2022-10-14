@@ -5,6 +5,11 @@ const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const productsRoute = require("./routes/product");
+const cardRoute = require("./routes/card");
+const ordersRoute = require("./routes/order");
+const stripeRoute = require("./routes/stripe");
+const cors = require("cors");
+
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
@@ -27,11 +32,14 @@ mongoose.connection.on("connected", () => {
   console.log("mongoDb connected");
 });
 app.use(cookieParser());
+app.use(cors());
 app.use(express.json());
-
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productsRoute);
+app.use("/api/cards", cardRoute);
+app.use("/api/orders", ordersRoute);
+app.use("/api/checkout", stripeRoute);
 
 app.use((error, req, res, next) => {
   const errorStatus = error.status || 500;
