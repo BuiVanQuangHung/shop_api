@@ -32,7 +32,8 @@ const login = async (req, res, next) => {
       return next(createError(404, "Wrong password or Username"));
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT
+      process.env.JWT,
+      { expiresIn: "3d" }
     );
     const { password, isAdmin, ...ortherDetails } = user._doc;
     res

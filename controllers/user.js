@@ -41,6 +41,7 @@ const getAllUsers = async (req, res, next) => {
     next(error);
   }
 };
+
 module.exports = {
   updateUser,
   deleteUser,
